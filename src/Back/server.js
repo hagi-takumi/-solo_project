@@ -100,8 +100,8 @@ app.post("/slide", async (req, res) => {
   await knex("slides").insert(req.body);
 
   const result = await fetch(
-    // "/previousCook/sazaezamasu"
-    "http://localhost:7777/slide"
+    "/slide"
+    // "http://localhost:7777/slide"
   ).then((e) => e.json());
 
   res.set("content-type", "application/json").status(200).send(result);

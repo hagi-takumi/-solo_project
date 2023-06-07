@@ -8,7 +8,10 @@ const SlideList = () => {
 
   useEffect(() => {
     const getList = async () => {
-      const fetchList = await fetch("http://localhost:7777/slide");
+      const fetchList = await fetch(
+        // "http://localhost:7777/slide"
+        "/slide"
+      );
       const jsonList = await fetchList.json();
 
       setSlideList(jsonList);
