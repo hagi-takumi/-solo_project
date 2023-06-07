@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { FlagContext } from "../../App";
-import ImageGallery from "./ImageGallery";
 
 // ###################
 // Swiperモジュール

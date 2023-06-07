@@ -1,11 +1,11 @@
 import React, { useState, useRef, createContext } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import ImageGallery from "./Front/component/ImageGallery";
-import AutoSlide from "./Front/component/AutoSlide";
 import Header from "./Front/component/Header";
 import Footer from "./Front/component/Footer";
 import Main from "./Front/component/Main";
+
+console.log(process.env.REACT_APP_TEST);
 
 type props = [
   flag: number,
