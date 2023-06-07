@@ -25,8 +25,9 @@ const MenuSlide = () => {
     console.log({ title });
     // APIのURL
     const getFetch = await fetch(
-      // `http://localhost:7777/auto/${title}/5`
-      `/auto/${title}/5`
+      process.env.REACT_APP_TEST
+        ? `http://localhost:7777/auto/${title}/5`
+        : `/auto/${title}/5`
     );
     console.log(getFetch);
 

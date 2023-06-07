@@ -7,6 +7,8 @@ const knex = require("./data/knex");
 
 app.use(express.json());
 
+// console.log(process.env.REACT_APP_TEST);
+
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
@@ -100,8 +102,7 @@ app.post("/slide", async (req, res) => {
   await knex("slides").insert(req.body);
 
   const result = await fetch(
-    "/slide"
-    // "http://localhost:7777/slide"
+    process.env.REACT_APP_TEST ? "http://localhost:7777/slide" : "/slide"
   ).then((e) => e.json());
 
   res.set("content-type", "application/json").status(200).send(result);

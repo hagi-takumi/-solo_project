@@ -30,8 +30,7 @@ const CheckSlide = () => {
     };
     // APIのURL
     const getFetch = await fetch(
-      // `http://localhost:7777/slide`
-      `/slide`,
+      process.env.REACT_APP_TEST ? `http://localhost:7777/slide` : `/slide`,
       {
         method: "POST",
         headers: {
