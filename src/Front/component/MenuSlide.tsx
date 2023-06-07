@@ -24,7 +24,10 @@ const MenuSlide = () => {
     const title = String(inputRef.current?.value);
     console.log({ title });
     // APIのURL
-    const getFetch = await fetch(`http://localhost:7777/auto/${title}/5`);
+    const getFetch = await fetch(
+      // `http://localhost:7777/auto/${title}/5`
+      `/auto/${title}/5`
+    );
     console.log(getFetch);
 
     setImgSelect(await getFetch.json());
