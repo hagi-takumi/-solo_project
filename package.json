@@ -16,11 +16,13 @@
     "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "knex": "^2.4.2",
+    "node-fetch": "^3.3.1",
     "nodemon": "^2.0.22",
     "pg": "^8.11.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
+    "swiper": "^9.3.2",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
@@ -30,7 +32,13 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node ./src/Back/server.js",
-    "dev": "nodemon ./src/Back/server.js"
+    "dev": "nodemon ./src/Back/server.js",
+    "migrate-latest": "npx knex migrate:latest --knexfile src/Back/data/knexfile.js",
+    "migrate-make": "npx knex migrate:make --knexfile src/Back/data/knexfile.js",
+    "migrate-back": "npx knex migrate:rollback --knexfile src/Back/data/knexfile.js",
+    "migrate-down": "npx knex migrate:down --knexfile src/Back/data/knexfile.js",
+    "seed-make": "npx knex seed:make --knexfile src/Back/data/knexfile.js",
+    "seed-data": "npx knex seed:run --knexfile src/Back/data/knexfile.js"
   },
   "eslintConfig": {
     "extends": [
