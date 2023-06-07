@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from "react";
 import "./component.css";
-import ContentArea from "./ContentArea";
 import Top from "./Top";
 import MenuSlide from "./MenuSlide";
 import SlideList from "./SlideList";
