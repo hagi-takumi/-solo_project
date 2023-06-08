@@ -27,10 +27,10 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "npm run dev",
+    "start": "react-scripts start",
     "render_start": "npm run dev",
     "render_build_start": "npm run render_build && npm run render_start",
-    "build": "npm run render_build",
+    "build": "react-scripts build",
     "render_build": "npm install && npm run migrate-back && npm run migrate-latest && npm run seed-data && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
