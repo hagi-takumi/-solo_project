@@ -8,9 +8,7 @@ const SlideList = () => {
 
   useEffect(() => {
     const getList = async () => {
-      const fetchList = await fetch(
-        process.env.REACT_APP_TEST ? "http://localhost:7777/slide" : "/slide"
-      ).then((e) => e.json());
+      const fetchList = await fetch("/slide").then((e) => e.json());
 
       setSlideList(fetchList);
     };
