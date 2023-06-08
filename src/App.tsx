@@ -1,5 +1,4 @@
 import React, { useState, useRef, createContext } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Header from "./Front/component/Header";
 import Footer from "./Front/component/Footer";

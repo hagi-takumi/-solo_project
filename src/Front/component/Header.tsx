@@ -3,7 +3,16 @@ import "./component.css";
 import { FlagContext } from "../../App";
 
 const Header = () => {
-  const [flag, setFlag] = useContext(FlagContext);
+  const [
+    flag,
+    setFlag,
+    slideList,
+    setSlideList,
+    slideSelect,
+    setSlideSelect,
+    imgSelect,
+    setImgSelect,
+  ] = useContext(FlagContext);
 
   return (
     <header className="headArea">
@@ -13,6 +22,7 @@ const Header = () => {
         type="submit"
         onClick={() => {
           setFlag(1);
+          setImgSelect([]);
         }}
       >
         TOPに戻る
