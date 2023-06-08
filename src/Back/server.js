@@ -7,6 +7,10 @@ const knex = require("./data/knex");
 
 app.use(express.json());
 
+// const nodeFetch = require("node-fetch");
+// const nodeFetch = import("node-fetch").then((module) => module.default);
+app.use(express.static("build"));
+
 // console.log(process.env.REACT_APP_TEST);
 
 app.use((req, res, next) => {
