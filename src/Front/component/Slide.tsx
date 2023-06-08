@@ -6,9 +6,11 @@ import { FlagContext } from "../../App";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // swiperで用意されているデフォルトののスタイル
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+// import "swiper/css";
+// import "swiper/css/navigation";
+// import "swiper/css/pagination";
+import "swiper/swiper-bundle.min.css";
+import "swiper/swiper.min.css";
 
 // ナビゲーションやページネーションのモジュール
 import { Navigation, Pagination } from "swiper";
