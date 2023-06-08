@@ -48,46 +48,68 @@ app.get("/auto/:title/:count", async (req, res) => {
   const count = req.params.count;
   console.log(count);
   const title = req.params.title;
+  // const title = "はな";
+  console.log(title);
   // APIから画像を取得する枚数
   const getCount = 100;
   const fetchImg = await fetch(
-    `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=${getCount}`
+    `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
   ).then(async (e) => {
-    const imgArr = await e.json();
-    console.log("era-------", imgArr.total);
-    return imgArr.total >= 5
-      ? e
+    const result = await e.json();
+    console.log("era-------", result);
+    console.log("era-------2", result.hits.length);
+    console.log(result.hits.length >= 5);
+    return result.hits.length >= 5
+      ? await fetch(
+          `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
+        )
       : await fetch(
-          `https://pixabay.com/api/?key=${process.env.API_KEY}&image_type=photo&pretty=true&per_page=${getCount}`
+          `https://pixabay.com/api/?key=${process.env.API_KEY}&q=犬&image_type=photo&pretty=true&per_page=50`
         );
   });
+  // const result = await fetchImg.json();
+  // const chkFetchImg =
+  //   result.hits.length >= 5
+  //     ? fetchImg
+  //     : await fetch(
+  //         `https://pixabay.com/api/?key=${process.env.API_KEY}&image_type=photo&pretty=true&per_page=50`
+  //       );
+
   const imgArr = await fetchImg.json();
+  // const imgArr = await chkFetchImg.json();
+  console.log({ imgArr });
+  console.log("imgArr", imgArr.hits.length);
+
   // ランダムな配列を取得
   const randomArrOfNum = randomArr(imgArr.hits.length);
   console.log({ randomArrOfNum });
   // スライスで指定個数分に変更
-  const imgSlice = randomArrOfNum.slice(0, count);
-  console.log({ imgSlice });
-  let imgResult = [];
+  const numSlice = randomArrOfNum.slice(0, count);
+  console.log({ numSlice });
+  const imgResult = [];
   // ランダムな画像を配列に格納(getCountから厳選)
-  imgSlice.forEach((element) => {
+  numSlice.forEach((element) => {
     imgResult.push(imgArr.hits[element]);
   });
   console.log(imgResult.length);
+  console.log({ imgResult });
 
   // URLのみに変更
   const imgURL = imgResult.map((e) => e.largeImageURL);
   console.log({ imgURL });
-  res.status(200);
-  res.send(JSON.stringify(imgURL));
+  res
+    .set("content-type", "application/json")
+    .status(200)
+    .send(JSON.stringify(imgURL));
 });
 
 //スライドの情報を全て取得する
 app.get("/slide", async (req, res) => {
   const data = await knex.select("*").from("slides");
-
-  res.status(200);
-  res.send(JSON.stringify(data));
+  res
+    .set("content-type", "application/json")
+    .status(200)
+    .send(JSON.stringify(data));
 });
 
 //接続確認
@@ -105,7 +127,10 @@ app.post("/slide", async (req, res) => {
     process.env.REACT_APP_TEST ? "http://localhost:7777/slide" : "/slide"
   ).then((e) => e.json());
 
-  res.set("content-type", "application/json").status(200).send(result);
+  res
+    .set("content-type", "application/json")
+    .status(200)
+    .send(JSON.stringify(result));
 });
 
 app.listen(port, () => {
