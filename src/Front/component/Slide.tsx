@@ -17,7 +17,6 @@ import { Navigation, Pagination } from "swiper";
 const Slide = () => {
   const [flag, setFlag, slideList, setSlideList, slideSelect, setSlideSelect] =
     useContext(FlagContext);
-  console.log(slideSelect);
 
   const imgArr = [...slideSelect.img_list];
   const lastImg = imgArr.splice(-1);
@@ -35,7 +34,6 @@ const Slide = () => {
             <div className="slide">{slideSelect.title}</div>
           </SwiperSlide>
           {imgArr.map((e: any, i) => {
-            console.log(e);
             return (
               <SwiperSlide>
                 <img src={e} alt="" key={i} />

@@ -4,8 +4,6 @@ import Header from "./Front/component/Header";
 import Footer from "./Front/component/Footer";
 import Main from "./Front/component/Main";
 
-console.log(process.env.REACT_APP_TEST);
-
 type props = [
   flag: number,
   setFlag: Function,
@@ -36,7 +34,6 @@ function App() {
   const [slideSelect, setSlideSelect] = useState([]);
   // 閲覧時に選択されたスライド格納
   const [imgSelect, setImgSelect] = useState([]);
-  console.log("App==========");
 
   return (
     <FlagContext.Provider

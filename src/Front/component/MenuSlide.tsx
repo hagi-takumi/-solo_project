@@ -23,19 +23,8 @@ const MenuSlide = () => {
 
   const handleSubmitAuto = async () => {
     const title = String(inputRef.current?.value);
-    console.log({ title });
-    console.log(
-      process.env.REACT_APP_TEST
-        ? `http://localhost:7777/auto/${title}/5`
-        : `/auto/${title}/5`
-    );
 
     // APIのURL
-    // const getFetch = await fetch(
-    // process.env.REACT_APP_TEST
-    //   ? `http://localhost:7777/auto/${title}/5`
-    //   : `/auto/${title}/5`
-    // ).then((e) => e.json());
 
     const getFetch = await axios
       .get(
@@ -44,9 +33,7 @@ const MenuSlide = () => {
           : `/auto/${title}/5`
       )
       .then((e) => e.data);
-    console.log("MenuSlide", { getFetch });
 
-    // setImgSelect(await getFetch.json());
     setImgSelect(getFetch);
   };
 

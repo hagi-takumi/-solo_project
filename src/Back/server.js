@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 require("dotenv").config();
+// const port = 8000;
 const port = process.env.S_PORT || 8000;
 const knex = require("./data/knex");
 const axios = require("axios");
@@ -10,8 +11,6 @@ app.use(express.json());
 // const nodeFetch = require("node-fetch");
 // const nodeFetch = import("node-fetch").then((module) => module.default);
 app.use(express.static("build"));
-
-// console.log(process.env.REACT_APP_TEST);
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -48,12 +47,8 @@ const randomArr = (max = 10) => {
 
 //タイトルに沿った画像をCount枚数分取得する
 app.get("/auto/:title/:count", async (req, res) => {
-  // console.log(req.params.title);
   const count = req.params.count;
-  console.log(count);
   const title = req.params.title;
-  // const title = "はな";
-  console.log(title);
   // APIから画像を取得する枚数
   const getCount = 100;
   const fetchImg = await axios
@@ -61,12 +56,7 @@ app.get("/auto/:title/:count", async (req, res) => {
       `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
     )
     .then(async (e) => {
-      console.log(e);
-      // const result = await e.json();
       const result = await e.data;
-      console.log("era-------", result);
-      console.log("era-------2", result.hits.length);
-      console.log(result.hits.length >= 5);
       return result.hits.length >= 5
         ? await axios.get(
             `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
@@ -75,37 +65,20 @@ app.get("/auto/:title/:count", async (req, res) => {
             `https://pixabay.com/api/?key=${process.env.API_KEY}&q=犬&image_type=photo&pretty=true&per_page=50`
           );
     });
-  // const result = await fetchImg.json();
-  // const chkFetchImg =
-  //   result.hits.length >= 5
-  //     ? fetchImg
-  //     : await fetch(
-  //         `https://pixabay.com/api/?key=${process.env.API_KEY}&image_type=photo&pretty=true&per_page=50`
-  //       );
-
-  // const imgArr = await fetchImg.json();
   const imgArr = await fetchImg.data;
-  // const imgArr = await chkFetchImg.json();
-  console.log({ imgArr });
-  console.log("imgArr", imgArr.hits.length);
 
   // ランダムな配列を取得
   const randomArrOfNum = randomArr(imgArr.hits.length);
-  console.log({ randomArrOfNum });
   // スライスで指定個数分に変更
   const numSlice = randomArrOfNum.slice(0, count);
-  console.log({ numSlice });
   const imgResult = [];
   // ランダムな画像を配列に格納(getCountから厳選)
   numSlice.forEach((element) => {
     imgResult.push(imgArr.hits[element]);
   });
-  console.log(imgResult.length);
-  console.log({ imgResult });
 
   // URLのみに変更
   const imgURL = imgResult.map((e) => e.largeImageURL);
-  console.log({ imgURL });
   res
     .set("content-type", "application/json")
     .status(200)
@@ -129,7 +102,6 @@ app.get("/", async (req, res) => {
 
 //スライドを登録
 app.post("/slide", async (req, res) => {
-  console.log(req.body);
   await knex("slides").insert(req.body);
 
   const result = await axios
