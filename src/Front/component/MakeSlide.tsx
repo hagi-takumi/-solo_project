@@ -44,7 +44,11 @@ const MakeSlide = () => {
     <>
       <div className="img_box wrapper">
         {imgChoice.map((e, i) => {
-          return <img className="imgViewMini" src={e} alt="" key={i} />;
+          return (
+            <div className="img-wrap">
+              <img className="imgViewMini" src={e} alt="" key={i} />
+            </div>
+          );
         })}
       </div>
       <input
