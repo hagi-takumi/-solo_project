@@ -32,7 +32,7 @@ const randomArr = (max = 10) => {
   const min = 0;
 
   /** 重複チェックしながら乱数作成 */
-  for (let i = min; i <= max; i++) {
+  for (let i = min; i < max; i++) {
     while (true) {
       const tmp = intRandom(min, max);
       if (!randoms.includes(tmp)) {
@@ -44,7 +44,7 @@ const randomArr = (max = 10) => {
 
   /** min以上max以下の整数値の乱数を返す */
   function intRandom(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    return Math.floor(Math.random() * (max - min));
   }
 
   return randoms;
@@ -55,35 +55,62 @@ app.get("/auto/:title/:count", async (req, res) => {
   const count = req.params.count;
   const title = req.params.title;
   // APIから画像を取得する枚数
-  const getCount = 100;
-  const fetchImg = await axios
-    .get(
-      `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
-    )
-    .then(async (e) => {
-      const result = await e.data;
-      return result.hits.length >= 5
-        ? await axios.get(
-            `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
-          )
-        : await axios.get(
-            `https://pixabay.com/api/?key=${process.env.API_KEY}&q=犬&image_type=photo&pretty=true&per_page=50`
-          );
-    });
-  const imgArr = await fetchImg.data;
+  const getCount = 50;
+  let fetchImg;
+  do {
+    console.log("⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️while⭐️⭐️⭐️⭐️⭐️⭐️⭐️⭐️");
+    fetchImg = await axios
+      .get(
+        `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=${getCount}`
+      )
+      .then(async (e) => {
+        const result = await e.data;
+        console.log(result.hits.length >= 5);
+        return result.hits.length >= 5
+          ? await axios.get(
+              `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=${getCount}`
+            )
+          : await axios.get(
+              `https://pixabay.com/api/?key=${process.env.API_KEY}&q=犬&image_type=photo&pretty=true&per_page=${getCount}`
+            );
+      });
+  } while (fetchImg.data.length < 5);
+
+  let imgArr = fetchImg.data.hits;
+
+  console.log({ imgArr });
 
   // ランダムな配列を取得
-  const randomArrOfNum = randomArr(imgArr.hits.length);
+  const randomArrOfNum = randomArr(imgArr.length);
+  console.log("###########ランダム", randomArrOfNum);
   // スライスで指定個数分に変更
   const numSlice = randomArrOfNum.slice(0, count);
-  const imgResult = [];
+
+  let imgResult = [];
   // ランダムな画像を配列に格納(getCountから厳選)
   numSlice.forEach((element) => {
-    imgResult.push(imgArr.hits[element]);
+    imgResult.push(imgArr[element]);
+  });
+  console.log({ imgResult });
+
+  imgResult = imgResult.map((item) => {
+    if (item === undefined) {
+      return {
+        largeImageURL:
+          "https://pixabay.com/get/g593ed16665f2d9e620fdfd6eafe17143de89ad41a568e283cf22ae784e6a1db797934817edcc6e0fa7eb0825e3832f4c2faf7ca04765ce13bc785022c6170a1c_1280.jpg",
+      };
+    } else {
+      return item;
+    }
   });
 
   // URLのみに変更
-  const imgURL = imgResult.map((e) => e.largeImageURL);
+  const imgURL = imgResult.map((e) => {
+    console.log("#########", e);
+    console.log("#########", e.largeImageURL);
+    return e.largeImageURL;
+  });
+  console.log({ imgURL });
   res
     .set("content-type", "application/json")
     .status(200)

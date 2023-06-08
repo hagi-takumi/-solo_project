@@ -19,20 +19,28 @@ const MenuSlide = () => {
     setSlideSelect,
     imgSelect,
     setImgSelect,
+    imgChoice,
+    setImgChoice,
   ] = useContext(FlagContext);
 
-  const handleSubmitAuto = async () => {
+  const handleSubmitAuto = async (num = 5) => {
     const title = String(inputRef.current?.value);
 
     // APIのURL
 
-    const getFetch = await axios.get(`/auto/${title}/5`).then((e) => e.data);
+    const getFetch = await axios
+      .get(`/auto/${title}/${num}`)
+      .then((e) => e.data);
     setImgSelect(getFetch);
+    return getFetch;
   };
 
   return (
     <div>
+      <h2>Menu画面</h2>
+
       <input
+        className="inputPop"
         ref={inputRef}
         type="text"
         placeholder="目的のタイトルを入力してください"
@@ -41,13 +49,21 @@ const MenuSlide = () => {
         type="submit"
         className="button"
         onClick={() => {
-          handleSubmitAuto();
-          setFlag(6);
+          handleSubmitAuto(5);
+          setFlag(5);
         }}
       >
         おまかせ
       </button>
-      <button className="button">自分でどうしても選びたい！！</button>
+      <button
+        className="button"
+        onClick={() => {
+          handleSubmitAuto(20);
+          setFlag(5);
+        }}
+      >
+        自分でどうしても選びたい！！
+      </button>
     </div>
   );
 };
