@@ -41,7 +41,8 @@
     "migrate-back": "npx knex migrate:rollback --knexfile src/Back/data/knexfile.js",
     "migrate-down": "npx knex migrate:down --knexfile src/Back/data/knexfile.js",
     "seed-make": "npx knex seed:make --knexfile src/Back/data/knexfile.js",
-    "seed-data": "npx knex seed:run --knexfile src/Back/data/knexfile.js"
+    "seed-data": "npx knex seed:run --knexfile src/Back/data/knexfile.js",
+    "test_mocha": "mocha -w --exit"
   },
   "eslintConfig": {
     "extends": [
@@ -60,5 +61,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3"
   }
 }
