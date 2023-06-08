@@ -2,15 +2,20 @@ const express = require("express");
 const app = express();
 require("dotenv").config();
 // const port = 8000;
-const port = process.env.S_PORT || 8000;
+const port = 8000;
 const knex = require("./data/knex");
 const axios = require("axios");
+const path = require("path");
 
 app.use(express.json());
 
 // const nodeFetch = require("node-fetch");
 // const nodeFetch = import("node-fetch").then((module) => module.default);
-app.use(express.static("build"));
+// app.use(express.static("build"));
+
+//ビルドして静的な場所を指定する
+// 一つのPORTでフロントとバックを行う（サーバーから静的なHTMLなどを読み込む）
+app.use(express.static(path.join(__dirname, "../../build")));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -104,14 +109,7 @@ app.get("/", async (req, res) => {
 app.post("/slide", async (req, res) => {
   await knex("slides").insert(req.body);
 
-  const result = await axios
-    .get(process.env.REACT_APP_TEST ? "http://localhost:7777/slide" : "/slide")
-    .then((e) => e.data);
-
-  res
-    .set("content-type", "application/json")
-    .status(200)
-    .send(JSON.stringify(result));
+  res.status(200).send("成功");
 });
 
 app.listen(port, () => {

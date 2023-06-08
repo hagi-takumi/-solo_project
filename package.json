@@ -28,7 +28,10 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm install && npm run migrate-back && npm run migrate-latest && npm run seed-data && react-scripts build",
+    "render_start": "npm run dev",
+    "render_build_start": "npm run render_build && npm run render_start",
+    "build": "react-scripts build",
+    "render_build": "npm install && npm run migrate-back && npm run migrate-latest && npm run seed-data && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node ./src/Back/server.js",

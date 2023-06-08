@@ -26,14 +26,7 @@ const MenuSlide = () => {
 
     // APIのURL
 
-    const getFetch = await axios
-      .get(
-        process.env.REACT_APP_TEST
-          ? `http://localhost:7777/auto/${title}/5`
-          : `/auto/${title}/5`
-      )
-      .then((e) => e.data);
-
+    const getFetch = await axios.get(`/auto/${title}/5`).then((e) => e.data);
     setImgSelect(getFetch);
   };
 

@@ -27,16 +27,13 @@ const CheckSlide = () => {
       make_date: new Date(),
     };
     // APIのURL
-    await fetch(
-      process.env.REACT_APP_TEST ? `http://localhost:7777/slide` : `/slide`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      }
-    );
+    await fetch(`/slide`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
   };
 
   return (
