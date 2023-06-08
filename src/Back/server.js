@@ -3,7 +3,7 @@ const app = express();
 require("dotenv").config();
 const port = process.env.S_PORT || 8000;
 const knex = require("./data/knex");
-// const { default: axios } = require("axios");
+const axios = require("axios");
 
 app.use(express.json());
 
@@ -56,21 +56,25 @@ app.get("/auto/:title/:count", async (req, res) => {
   console.log(title);
   // APIから画像を取得する枚数
   const getCount = 100;
-  const fetchImg = await fetch(
-    `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
-  ).then(async (e) => {
-    const result = await e.json();
-    console.log("era-------", result);
-    console.log("era-------2", result.hits.length);
-    console.log(result.hits.length >= 5);
-    return result.hits.length >= 5
-      ? await fetch(
-          `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
-        )
-      : await fetch(
-          `https://pixabay.com/api/?key=${process.env.API_KEY}&q=犬&image_type=photo&pretty=true&per_page=50`
-        );
-  });
+  const fetchImg = await axios
+    .get(
+      `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
+    )
+    .then(async (e) => {
+      console.log(e);
+      // const result = await e.json();
+      const result = await e.data;
+      console.log("era-------", result);
+      console.log("era-------2", result.hits.length);
+      console.log(result.hits.length >= 5);
+      return result.hits.length >= 5
+        ? await axios.get(
+            `https://pixabay.com/api/?key=${process.env.API_KEY}&q=${title}&image_type=photo&pretty=true&per_page=50`
+          )
+        : await axios.get(
+            `https://pixabay.com/api/?key=${process.env.API_KEY}&q=犬&image_type=photo&pretty=true&per_page=50`
+          );
+    });
   // const result = await fetchImg.json();
   // const chkFetchImg =
   //   result.hits.length >= 5
@@ -79,7 +83,8 @@ app.get("/auto/:title/:count", async (req, res) => {
   //         `https://pixabay.com/api/?key=${process.env.API_KEY}&image_type=photo&pretty=true&per_page=50`
   //       );
 
-  const imgArr = await fetchImg.json();
+  // const imgArr = await fetchImg.json();
+  const imgArr = await fetchImg.data;
   // const imgArr = await chkFetchImg.json();
   console.log({ imgArr });
   console.log("imgArr", imgArr.hits.length);
@@ -127,9 +132,9 @@ app.post("/slide", async (req, res) => {
   console.log(req.body);
   await knex("slides").insert(req.body);
 
-  const result = await fetch(
-    process.env.REACT_APP_TEST ? "http://localhost:7777/slide" : "/slide"
-  ).then((e) => e.json());
+  const result = await axios
+    .get(process.env.REACT_APP_TEST ? "http://localhost:7777/slide" : "/slide")
+    .then((e) => e.data);
 
   res
     .set("content-type", "application/json")
