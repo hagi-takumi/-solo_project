@@ -6,14 +6,22 @@ const SlideList = () => {
   const [flag, setFlag, slideList, setSlideList, slideSelect, setSlideSelect] =
     useContext(FlagContext);
 
+  console.log(
+    "SlideList",
+    process.env.REACT_APP_TEST ? "http://localhost:7777/slide" : "/slide"
+  );
+
   useEffect(() => {
     const getList = async () => {
+      console.log("setSlideList===============");
+
       const fetchList = await fetch(
         process.env.REACT_APP_TEST ? "http://localhost:7777/slide" : "/slide"
-      );
-      const jsonList = await fetchList.json();
+      ).then((e) => e.json());
+      // const jsonList = await fetchList.json();
+      console.log(fetchList);
 
-      setSlideList(jsonList);
+      setSlideList(fetchList);
     };
     getList();
   }, []);
@@ -23,12 +31,12 @@ const SlideList = () => {
       <h2>閲覧画面</h2>
       <div className="container">
         {slideList.map((e: any, index) => {
-          console.table(e);
+          // console.table(e);
           return (
             <div className="image" key={index}>
               <p
                 onClick={() => {
-                  console.log(e);
+                  // console.log(e);
 
                   setSlideSelect(e);
                   setFlag(4);
