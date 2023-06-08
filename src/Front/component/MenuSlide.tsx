@@ -6,6 +6,7 @@ import React, {
   useRef,
 } from "react";
 import { FlagContext } from "../../App";
+import axios from "axios";
 
 const MenuSlide = () => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,15 +24,30 @@ const MenuSlide = () => {
   const handleSubmitAuto = async () => {
     const title = String(inputRef.current?.value);
     console.log({ title });
-    // APIのURL
-    const getFetch = await fetch(
+    console.log(
       process.env.REACT_APP_TEST
         ? `http://localhost:7777/auto/${title}/5`
         : `/auto/${title}/5`
     );
-    console.log(getFetch);
 
-    setImgSelect(await getFetch.json());
+    // APIのURL
+    // const getFetch = await fetch(
+    // process.env.REACT_APP_TEST
+    //   ? `http://localhost:7777/auto/${title}/5`
+    //   : `/auto/${title}/5`
+    // ).then((e) => e.json());
+
+    const getFetch = await axios
+      .get(
+        process.env.REACT_APP_TEST
+          ? `http://localhost:7777/auto/${title}/5`
+          : `/auto/${title}/5`
+      )
+      .then((e) => e.data);
+    console.log("MenuSlide", { getFetch });
+
+    // setImgSelect(await getFetch.json());
+    setImgSelect(getFetch);
   };
 
   return (
