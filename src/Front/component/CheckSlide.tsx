@@ -44,11 +44,6 @@ const CheckSlide = () => {
 
   return (
     <>
-      <div>
-        {imgSelect.map((e, i) => {
-          return <img className="imgView" src={e} alt="" key={i} />;
-        })}
-      </div>{" "}
       <input
         ref={inputRef}
         type="text"
@@ -58,10 +53,16 @@ const CheckSlide = () => {
         onClick={() => {
           postImg();
           setFlag(1);
+          setImgSelect([]);
         }}
       >
         これでOKですか？？
-      </button>
+      </button>{" "}
+      <div>
+        {imgSelect.map((e, i) => {
+          return <img className="imgView" src={e} alt="" key={i} />;
+        })}
+      </div>{" "}
     </>
   );
 };
