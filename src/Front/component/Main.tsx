@@ -9,8 +9,6 @@ import { FlagContext } from "../../App";
 import CheckSlide from "./CheckSlide";
 
 const Main = () => {
-  console.log("Main====================");
-
   const [flag, setFlag] = useContext(FlagContext);
 
   return (

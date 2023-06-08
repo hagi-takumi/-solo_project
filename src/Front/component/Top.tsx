@@ -6,7 +6,6 @@ const Top = () => {
   const [flag, setFlag] = useContext(FlagContext);
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(inputRef.current?.value);
     // APIのURL
   };
   return (

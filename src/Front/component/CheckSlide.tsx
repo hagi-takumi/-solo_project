@@ -17,19 +17,17 @@ const CheckSlide = () => {
     imgSelect,
     setImgSelect,
   ] = useContext(FlagContext);
-  console.log({ imgSelect });
   const inputRef = useRef<HTMLInputElement>(null);
 
   const postImg = async () => {
     const title = String(inputRef.current?.value);
-    console.log({ title });
     const body = {
       title: title,
       img_list: imgSelect,
       make_date: new Date(),
     };
     // APIのURL
-    const getFetch = await fetch(
+    await fetch(
       process.env.REACT_APP_TEST ? `http://localhost:7777/slide` : `/slide`,
       {
         method: "POST",
@@ -39,7 +37,6 @@ const CheckSlide = () => {
         body: JSON.stringify(body),
       }
     );
-    console.log(getFetch);
   };
 
   return (
