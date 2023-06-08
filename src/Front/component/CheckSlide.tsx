@@ -39,11 +39,13 @@ const CheckSlide = () => {
   return (
     <>
       <input
+        className="inputPop"
         ref={inputRef}
         type="text"
         placeholder="目的のタイトルを入力してください"
       />
       <button
+        className="button"
         onClick={() => {
           postImg();
           setFlag(1);
@@ -51,12 +53,12 @@ const CheckSlide = () => {
         }}
       >
         これでOKですか？？
-      </button>{" "}
-      <div>
+      </button>
+      <div className="wrapper">
         {imgSelect.map((e, i) => {
           return <img className="imgView" src={e} alt="" key={i} />;
         })}
-      </div>{" "}
+      </div>
     </>
   );
 };

@@ -12,10 +12,14 @@ type props = [
   slideSelect: any,
   setSlideSelect: Function,
   imgSelect: string[],
-  setImgSelect: Function
+  setImgSelect: Function,
+  imgChoice: string[],
+  setImgChoice: Function
 ];
 export const FlagContext = createContext<props>([
   1,
+  () => {},
+  [],
   () => {},
   [],
   () => {},
@@ -32,8 +36,10 @@ function App() {
   const [slideList, setSlideList] = useState([]);
   // 閲覧時に選択されたスライド格納
   const [slideSelect, setSlideSelect] = useState([]);
-  // 閲覧時に選択されたスライド格納
+  // 自動算出された画像を格納
   const [imgSelect, setImgSelect] = useState([]);
+  // 選択された画像を格納
+  const [imgChoice, setImgChoice] = useState([]);
 
   return (
     <FlagContext.Provider
@@ -46,11 +52,13 @@ function App() {
         setSlideSelect,
         imgSelect,
         setImgSelect,
+        imgChoice,
+        setImgChoice,
       ]}
     >
       <>
         <Header />
-        <main>
+        <main className="mainContent">
           <Main />
         </main>
         <Footer />

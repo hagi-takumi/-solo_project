@@ -12,6 +12,8 @@ const Header = () => {
     setSlideSelect,
     imgSelect,
     setImgSelect,
+    ,
+    setImgChoice,
   ] = useContext(FlagContext);
 
   return (
@@ -23,6 +25,7 @@ const Header = () => {
         onClick={() => {
           setFlag(1);
           setImgSelect([]);
+          setImgChoice([]);
         }}
       >
         TOPに戻る
