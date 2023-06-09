@@ -9,27 +9,30 @@ const Top = () => {
     // APIのURL
   };
   return (
-    <div>
+    <div className="top">
       <h2>TOP画面</h2>
-
-      <button
-        className="button"
-        type="submit"
-        onClick={() => {
-          setFlag(2);
-        }}
-      >
-        スライド作成画面
-      </button>
-      <button
-        className="button"
-        type="submit"
-        onClick={() => {
-          setFlag(3);
-        }}
-      >
-        スライド閲覧画面
-      </button>
+      <div className="button_div">
+        <button
+          className="button"
+          type="submit"
+          onClick={() => {
+            setFlag(2);
+          }}
+        >
+          スライド作成画面
+        </button>
+      </div>
+      <div className="button_div">
+        <button
+          className="button"
+          type="submit"
+          onClick={() => {
+            setFlag(3);
+          }}
+        >
+          スライド閲覧画面
+        </button>
+      </div>
     </div>
   );
 };
