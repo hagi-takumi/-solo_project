@@ -36,7 +36,7 @@ const MenuSlide = () => {
   };
 
   return (
-    <div>
+    <div className="top">
       <h2>Menu画面</h2>
 
       <input
@@ -45,25 +45,29 @@ const MenuSlide = () => {
         type="text"
         placeholder="目的のタイトルを入力してください"
       />
-      <button
-        type="submit"
-        className="button"
-        onClick={() => {
-          handleSubmitAuto(5);
-          setFlag(5);
-        }}
-      >
-        おまかせ
-      </button>
-      <button
-        className="button"
-        onClick={() => {
-          handleSubmitAuto(20);
-          setFlag(5);
-        }}
-      >
-        自分でどうしても選びたい！！
-      </button>
+      <div className="button_div">
+        <button
+          type="submit"
+          className="button"
+          onClick={() => {
+            handleSubmitAuto(5);
+            setFlag(5);
+          }}
+        >
+          おまかせ
+        </button>
+      </div>
+      <div className="button_div">
+        <button
+          className="button"
+          onClick={() => {
+            handleSubmitAuto(20);
+            setFlag(5);
+          }}
+        >
+          自分でどうしても選びたい！！
+        </button>
+      </div>
     </div>
   );
 };

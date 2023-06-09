@@ -51,23 +51,27 @@ const MakeSlide = () => {
           );
         })}
       </div>
-      <input
-        className="inputPop"
-        ref={inputRef}
-        type="text"
-        placeholder="目的のタイトルを入力してください"
-      />
-      <button
-        className="button"
-        onClick={() => {
-          postImg();
-          setFlag(1);
-          setImgSelect([]);
-          setImgChoice([]);
-        }}
-      >
-        これでOKですか？？
-      </button>
+      <div className="make">
+        <input
+          className="inputPop"
+          ref={inputRef}
+          type="text"
+          placeholder="目的のタイトルを入力してください"
+        />
+        <div>
+          <button
+            className="button"
+            onClick={() => {
+              postImg();
+              setFlag(1);
+              setImgSelect([]);
+              setImgChoice([]);
+            }}
+          >
+            これでOKですか？？
+          </button>
+        </div>
+      </div>
       <div className="wrapper">
         {imgSelect.map((e, i) => {
           return (

@@ -18,7 +18,7 @@ const Main = () => {
       {flag === 3 && <SlideList />}
       {flag === 4 && <Slide />}
       {flag === 5 && <MakeSlide />}
-      {flag === 6 && <CheckSlide />}
+      {/* {flag === 6 && <CheckSlide />} */}
     </>
   );
 };
